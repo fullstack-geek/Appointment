@@ -1,0 +1,20 @@
+trigger bookAppointment on Account(before insert) {
+
+    Appointment appt = new Appointment();
+    appt.startTime = trigger.New[0].startTime;
+    appt.endTime = trigger.New[0].endTime;
+    appt.date = trigger.New[0].date;
+    appt.firstname = trigger.New[0].firstname;
+    appt.lastname = trigger.New[0].lastname;
+    appt.accountname = trigger.New[0].accountname;
+
+    List<Account> relatedAcct = [SELECT Id,AccountName FROM Account
+        WHERE AccountName IN :Trigger.New[0].accountname];
+
+    if (relatedAcct.size() < 1) {
+        Account newAccount = createNewAccount();
+        newAccount.addAppointment(appt);
+    } else {
+        relatedAcct[0].addAppointment(appt);
+    }
+}
