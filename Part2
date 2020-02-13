@@ -1,0 +1,26 @@
+@RestResource(urlMapping='/Appointment/*')
+global with sharing class MyRestResource {
+
+    @HttpDelete
+    global static void doDelete() {
+        RestRequest req = RestContext.request;
+        RestResponse res = RestContext.response;
+        String appointmentId = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
+        Appointment appointment = [SELECT Id FROM Appointment WHERE Id = :appointmentId];
+        delete appointment;
+    }
+  
+    @HttpPost
+    global static String doPost(String accountName,
+        String firstName, String lastName, String date, String startTime, String endTime) {
+        Appointment appointment = new Appointment();
+        appointment.accountName = accountName;
+        appointment.firstName = firstName;
+        appointment.lastName = lastName;
+        appointment.date = date;
+        appointment.startTime = startTime;
+        appointment.endTime = endTime;
+        insert appointment;
+        return appointment.Id;
+    }
+}
