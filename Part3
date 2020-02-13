@@ -1,0 +1,69 @@
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        firstname: '',
+        lastname: '',
+        appointmentdate: '',
+        startime: '',
+        endtime: '',
+        accountname: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('An appointment was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+         <h1>Make your appointment.</h1>
+          <p>Enter your first name:</p>
+          <input
+            type='text'
+            name='firstname'
+            onChange={this.myChangeHandler}
+          />
+          <p>Enter your last name:</p>
+          <input
+            type='text'
+            name='lastname'
+            onChange={this.myChangeHandler}
+          />
+          <p>Enter appointment date:</p>
+          <input
+            type='text'
+            name='appointmentdate'
+            onChange={this.myChangeHandler}
+          />
+          <p>Enter start time:</p>
+          <input
+            type='text'
+            name='starttime'
+            onChange={this.myChangeHandler}
+          />
+          <p>Enter end time:</p>
+         <input
+            type='text'
+            name='endtime'
+            onChange={this.myChangeHandler}
+          />
+          <p>Enter account name:</p>
+          <input
+            type='text'
+            name='accountname'
+            onChange={this.myChangeHandler}
+          />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
